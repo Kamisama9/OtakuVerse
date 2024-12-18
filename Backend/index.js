@@ -1,11 +1,21 @@
-const express=require("express");
-const app=express();
+import express from "express";
+import cors from "cors"
+import TorrentRoute from "./Routes/TorrentRoute.js";
 
-PORT=8000
+const app = express();
+const PORT = 8000;
 
-app.get("/",(req,res)=>{
-    res.send("Hello")
-})
-app.listen(PORT,()=>{
-    console.log("Server Started Sucessfully");
-})
+app.use(cors({
+  origin: '*', // Allow requests from any origin
+  methods: 'GET,HEAD,POST,PUT,DELETE', // Allow specific HTTP methods
+}));
+
+app.get("/", (req, res) => {
+  res.send("Hello");
+});
+
+app.use("/api/v1", TorrentRoute);
+
+app.listen(PORT, () => {
+  console.log(`Server started successfully on port ${PORT}`);
+});
